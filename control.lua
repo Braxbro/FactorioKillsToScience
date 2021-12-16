@@ -14,7 +14,7 @@ local function getMaximumEnergyOfRecipe(productName)
 	for name, recipe in pairs(recipes) do
 		local count
 		for _, product in pairs(recipe.products) do
-			if product.name = name then
+			if product.name = productName then
 				count = product.amount or product.amount_min
 			end
 		end
