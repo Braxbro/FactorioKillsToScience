@@ -14,7 +14,7 @@ local function getMaximumEnergyOfRecipe(productName)
 	for name, recipe in pairs(recipes) do
 		local count
 		for _, product in pairs(recipe.products) do
-			if product.name = productName then
+			if product.name == productName then
 				count = product.amount or product.amount_min
 			end
 		end
@@ -65,7 +65,7 @@ function onDeathHandler(event)
 	local overflow = settings.startup["science-overflow-mode"].value
 	local costPerDamage = settings.startup["cost-per-damage"].value
 	if (attackingForce.current_research == nil) then
-		if overflow = "void" then -- if not retaining science
+		if overflow == "void" then -- if not retaining science
 			return
 		else
 			global.storedCost[attackingForce.name] = (global.storedCost[attackingForce.name] or 0) + (entity.prototype.max_health * costPerDamage) * (1 + attackingForce.laboratory_productivity_bonus) -- if retaining science (keep or decay modes)
@@ -83,15 +83,15 @@ function onDeathHandler(event)
 		return
 	end
 
-	local researchUnitCost
+	local researchUnitCost = 0
 	for index, ingredient in pairs(attackingForce.current_research.research_unit_ingredients) do
 		researchUnitCost = researchUnitCost + global.packCost[ingredient.name] * ingredient.amount
 	end
-	researchUnitCost = (researchUnitCost + attackingForce.current_research.research_unit_energy) / (1 + attackingForce.laboratory_speed_modifier))
+	researchUnitCost = (researchUnitCost + attackingForce.current_research.research_unit_energy) / (1 + attackingForce.laboratory_speed_modifier)
 	local researchTotalCost = researchUnitCost * attackingForce.current_research.research_unit_count
 	local researchDelta = (entity.prototype.max_health * costPerDamage) / researchTotalCost * (1 + attackingForce.laboratory_productivity_bonus)
 	local researchProgress = attackingForce.research_progress + researchDelta
-	if not overflow = "void" then
+	if not overflow == "void" then
 		local costGain = (entity.prototype.max_health * costPerDamage) * (1 + attackingForce.laboratory_productivity_bonus)
 		global.storedCost[attackingForce.name] = global.storedCost[attackingForce.name] + math.max(costGain - (1 - researchTotalCost * attackingForce.research_progress), 0) -- excess gets stored if retaining science
 	end
@@ -110,18 +110,19 @@ local function onTick()
 			for index, ingredient in pairs(force.current_research.research_unit_ingredients) do
 				researchUnitCost = researchUnitCost + global.packCost[ingredient.name] * ingredient.amount
 			end
-			researchUnitCost = (researchUnitCost + force.current_research.research_unit_energy) / (1 + force.laboratory_speed_modifier))
+			researchUnitCost = (researchUnitCost + force.current_research.research_unit_energy) / (1 + force.laboratory_speed_modifier)
 			local researchTotalCost = researchUnitCost * force.current_research.research_unit_count
 			local researchDelta = global.storedCost[force.name]/researchTotalCost
 			local researchProgress = force.research_progress + researchDelta
 			global.storedCost[force.name] = math.max(0, global.storedCost[force.name] - (researchTotalCost * (1 - force.research_progress))) -- spend any stored science
-		else if settings.startup["science-overflow-mode"].value = "decay" then -- don't decay stored science that was spent this tick
+		else if settings.startup["science-overflow-mode"].value == "decay" then -- don't decay stored science that was spent this tick
 			global.storedCost[force.name] = (1 - settings.startup["science-decay-per-tick"]) * global.storedCost[force.name]
+			end
 		end
 	end
 end
 		
 script.on_init(onInit)
-script.on_tick(onTick)
+script.on_event(defines.events.on_tick, onTick)
 script.on_configuration_changed(calculateScienceCosts)
 script.on_event(defines.events.on_entity_died, onDeathHandler)
