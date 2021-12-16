@@ -32,5 +32,15 @@ data:extend({
 			allowed_values = {"void", "keep", "decay"}
 		}
 })
+data:extend({
+		{
+			type = "double-setting",
+			name = "science-decay-per-tick",
+			setting_type = "startup",
+			minimum_value = 0.01
+			default_value = 0.05
+			maximum_value = 0.99
+		}
+}
 			
             
