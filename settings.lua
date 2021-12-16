@@ -28,6 +28,7 @@ data:extend({
 	{
 		type = "string-setting"
 		name = "science-overflow-mode"
+        setting_type = "startup"
 		allowed_values = {"void", "keep", "decay"}
 	}
 })
