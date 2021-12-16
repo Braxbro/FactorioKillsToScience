@@ -1,3 +1,46 @@
+local function getMaximumEnergyOfRecipe(productName)
+	local recipes
+	if game.item_prototypes[name] then
+		recipes = game.get_filtered_recipe_prototypes({{filter = "has-product-item", elem_filters = {{filter = "name", name = productName) --recipe is an item
+	else 
+		if game.fluid_prototypes[name] then
+			recipes = game.get_filtered_recipe_prototypes({{filter = "has-product-fluid", elem_filters = {{filter = "name", name = productName) --recipe is a fluid
+		else
+			return 0 --cannot find recipe
+		end
+	end
+	local maxProductEnergy = 0
+	local maxEnergyRecipe 
+	for name, recipe in pairs(recipes) do
+		local count
+		for _, product in pairs(recipe.products) do
+			if product.name = name then
+				count = product.amount or product.amount_min
+			end
+		end
+		if (recipe.energy / count) > maxProductEnergy then
+			maxProductEnergy = recipe.energy / count
+			maxEnergyRecipe = recipe
+		end
+	end
+	if maxEnergyRecipe then
+		local sum
+		for _, ingredient in pairs do
+			maxProductEnergy = maxProductEnergy + getMaximumEnergyOfRecipe(ingredient.name) * ingredient.amount
+		end
+		return maxProductEnergy
+	else
+		return 0
+	end
+end
+	
+
+local function calculateScienceCosts()
+	local tools = game.get_filtered_item_prototypes({{filter = "tool"}})
+	for _, pack in pairs(tools) do
+		
+	
+
 local function onInit()
     if settings.startup["startup-unlock-tech"].value then
 	   for index, force in pairs(game.forces) do
