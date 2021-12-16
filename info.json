@@ -5,6 +5,6 @@
   "title": "Kills To Science",
   "author": "Braxbro",
   "homepage": "https://github.com/Braxbro/FactorioKillsToScience",
-  "dependencies": ["! CombatTechnology"]
+  "dependencies": ["! CombatTechnology"],
   "description": "Modified version of Combat Technology by sjlevin with more advanced configuration options and a slightly better attempt at balancing research costs. Also features options to retain research value when the research queue is empty by either storing all leftover research value or decaying stored research value by a percentage over time."
 }
