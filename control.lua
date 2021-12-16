@@ -14,15 +14,20 @@ function onDeathHandler(event)
     local entity = event.entity
 	local attackingForce = event.force
 	
-	if(attackingForce == nil)then
+	if (attackingForce == nil) then
 		return
 	end
 	if(attackingForce.current_research == nil) then
 		return
 	end
 
-	-- Do not reward destroying your own or neutral entities (like trees)
-	if(entity.force == attackingForce or entity.force.name == "neutral")then
+	-- Do not reward destroying your allied or neutral entities (like trees)
+	if (entity.force == attackingForce or entity.force.name == "neutral") then
+		return
+	end
+	
+	-- Disable reward for kills on cease-fired targets if not enabled 
+	if ((not settings.startup["reward-neutral-kills"]) and attackingForce.get_cease_fire(entity.force)) then
 		return
 	end
 
