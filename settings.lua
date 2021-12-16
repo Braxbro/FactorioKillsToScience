@@ -16,10 +16,11 @@ data:extend({
 })
 data:extend({
     {
-        type = "int-setting",
-        name = "damage-effect-scale",
+        type = "double-setting",
+        name = "cost-per-damage",
         setting_type = "startup",
-        minimum_value = 1,
-        default_value = 100
+        minimum_value = 0.01
+        default_value = 1
+        maximum_value = 100
     }
 })
