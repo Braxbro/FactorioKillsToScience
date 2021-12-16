@@ -91,6 +91,10 @@ function onDeathHandler(event)
 	local researchTotalCost = researchUnitCost * attackingForce.current_research.research_unit_count
 	local researchDelta = (entity.prototype.max_health * costPerDamage) / researchTotalCost * (1 + attackingForce.laboratory_productivity_bonus)
 	local researchProgress = attackingForce.research_progress + researchDelta
+	if not overflow = "void" then
+		local costGain = (entity.prototype.max_health * costPerDamage) * (1 + attackingForce.laboratory_productivity_bonus)
+		global.storedCost[attackingForce.name] = global.storedCost[attackingForce.name] + math.max(costGain - (1 - researchTotalCost * attackingForce.research_progress), 0) -- excess gets stored if retaining science
+	end
 	if (researchProgress >= 1) then
 		attackingForce.research_progress = 0
 		attackingForce.current_research.researched = true
