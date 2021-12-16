@@ -43,5 +43,3 @@ data:extend({
 			maximum_value = 0.99
 		}
 })
-			
-            
