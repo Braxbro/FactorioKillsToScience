@@ -1,3 +1,5 @@
+local startPrint = true
+
 local function getMaximumEnergyOfRecipe(productName)
 	local recipes
 	if game.item_prototypes[name] then
@@ -48,8 +50,6 @@ local function onInit()
 			global.storedCost[force.name] = settings.startup["startup-tech-boost"].value
 			if remote.interfaces["auto_research"] then
 				remote.call(auto_research, enabled, force, false)
-				game.print("Starting tech boost is ON. Auto Research has been disabled to permit manual choice of starting boost techs.")
-				game.print("Press Shift-T to open the Auto Research options menu and enable it manually.")
 			end
 			force.research_queue = nil --in case something starts in the tech queue
 		end
@@ -127,6 +127,12 @@ local function onTick()
 			global.storedCost[force.name] = (1 - settings.startup["science-decay-per-tick"]) * global.storedCost[force.name]
 			end
 		end
+	end
+	if startPrint and remote.interfaces["auto_research"] then
+		game.print("Starting tech boost is ON. Auto Research has been disabled to permit manual choice of starting boost techs.")
+		game.print("Press Shift-T to open the Auto Research options menu and enable it manually.")
+		startPrint = false
+		
 	end
 end
 		
