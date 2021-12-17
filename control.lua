@@ -37,7 +37,7 @@ end
 local function calculateScienceCosts()
 	local packs = game.get_filtered_item_prototypes({{filter = "subgroup", subgroup = "science-pack"}})
 	for _, pack in pairs(packs) do
-		global.packCost[pack.name] = math.floor(getMaximumEnergyOfRecipe(pack.name, 0)) + 1
+		global.packCost[pack.name] = getMaximumEnergyOfRecipe(pack.name)
 	end
 end
 
@@ -87,9 +87,6 @@ function onDeathHandler(event)
 	local researchUnitCost = 0
 	for index, ingredient in pairs(attackingForce.current_research.research_unit_ingredients) do
 		researchUnitCost = researchUnitCost + global.packCost[ingredient.name] * ingredient.amount --calc cost from stored science values
-		if global.packCost[ingredient.name] == 0 then
-			researchUnitCost = math.huge -- block researching techs that have undefined costs
-		end
 	end
 	researchUnitCost = (researchUnitCost + attackingForce.current_research.research_unit_energy) / (1 + attackingForce.laboratory_speed_modifier)
 	local researchTotalCost = researchUnitCost * attackingForce.current_research.research_unit_count
@@ -131,6 +128,7 @@ local function onTick()
 		end
 	end
 	if startPrint and remote.interfaces["auto_research"] then
+		game.print("[Kills to Science]",{r=.3, g=1, b=.3})
 		game.print("Starting tech boost is ON. Auto Research has been disabled to permit manual choice of starting boost techs.")
 		game.print("Press Shift-T to open the Auto Research options menu and enable it manually.")
 		startPrint = false
