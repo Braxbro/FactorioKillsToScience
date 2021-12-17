@@ -115,6 +115,12 @@ local function onTick()
 			local researchDelta = global.storedCost[force.name]/researchTotalCost
 			local researchProgress = force.research_progress + researchDelta
 			global.storedCost[force.name] = math.max(0, global.storedCost[force.name] - (researchTotalCost * (1 - force.research_progress))) -- spend any stored science
+			if (researchProgress >= 1) then
+				force.research_progress = 0
+				force.current_research.researched = true
+			else
+				force.research_progress = researchProgress
+			end
 		else if settings.startup["science-overflow-mode"].value == "decay" then -- don't decay stored science that was spent this tick
 			global.storedCost[force.name] = (1 - settings.startup["science-decay-per-tick"]) * global.storedCost[force.name]
 			end
