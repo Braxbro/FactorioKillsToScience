@@ -76,7 +76,7 @@ function onDeathHandler(event)
 	end
 	
 	-- Disable reward for kills on cease-fired/neutral targets if not enabled 
-	if ((not settings.startup["reward-neutral-kills"].value) and attackingForce.get_cease_fire(entity.force)) then
+	if ((not settings.startup["reward-neutral-kills"].value) and (attackingForce.get_cease_fire(entity.force) or entity.force.get_cease_fire(attackingForce))) then
 		return
 	end
 
