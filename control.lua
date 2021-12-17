@@ -1,6 +1,6 @@
 local startPrint = true
 
-local function getMaximumEnergyOfRecipe(productName)
+local function getMaximumEnergyOfRecipe(productName, depth)
 	local recipes
 	if game.item_prototypes[productName] then
 		recipes = game.get_filtered_recipe_prototypes({{filter = "has-product-item", elem_filters = {{filter = "name", name = productName}}}}) --recipe is an item
@@ -25,10 +25,10 @@ local function getMaximumEnergyOfRecipe(productName)
 			maxEnergyRecipe = recipe
 		end
 	end
-	if maxEnergyRecipe then
+	if maxEnergyRecipe and depth < 3 then
 		local sum
 		for _, ingredient in pairs(maxEnergyRecipe.ingredients) do
-			maxProductEnergy = maxProductEnergy + getMaximumEnergyOfRecipe(ingredient.name) * ingredient.amount
+			maxProductEnergy = maxProductEnergy + getMaximumEnergyOfRecipe(ingredient.name, depth + 1) * ingredient.amount
 		end
 	end
 	return maxProductEnergy
