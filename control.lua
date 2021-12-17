@@ -2,10 +2,10 @@ local startPrint = true
 
 local function getMaximumEnergyOfRecipe(productName)
 	local recipes
-	if game.item_prototypes[name] then
+	if game.item_prototypes[productName] then
 		recipes = game.get_filtered_recipe_prototypes({{filter = "has-product-item", elem_filters = {{filter = "name", name = productName}}}}) --recipe is an item
 	else 
-		if game.fluid_prototypes[name] then
+		if game.fluid_prototypes[productName] then
 			recipes = game.get_filtered_recipe_prototypes({{filter = "has-product-fluid", elem_filters = {{filter = "name", name = productName}}}}) --recipe is a fluid
 		else
 			return 0 --cannot find recipe
