@@ -106,7 +106,7 @@ end
 local function onTick()
 	for _, force in pairs(game.forces) do
 		if (force.current_research and global.storedCost[force.name]) then
-			local researchUnitCost
+			local researchUnitCost = 0
 			for index, ingredient in pairs(force.current_research.research_unit_ingredients) do
 				researchUnitCost = researchUnitCost + global.packCost[ingredient.name] * ingredient.amount
 			end
