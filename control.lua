@@ -26,7 +26,6 @@ local function getMaximumEnergyOfRecipe(productName, depth)
 		end
 	end
 	if maxEnergyRecipe and depth < 3 then
-		local sum
 		for _, ingredient in pairs(maxEnergyRecipe.ingredients) do
 			maxProductEnergy = maxProductEnergy + getMaximumEnergyOfRecipe(ingredient.name, depth + 1) * ingredient.amount
 		end
