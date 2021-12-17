@@ -87,6 +87,9 @@ function onDeathHandler(event)
 	local researchUnitCost = 0
 	for index, ingredient in pairs(attackingForce.current_research.research_unit_ingredients) do
 		researchUnitCost = researchUnitCost + global.packCost[ingredient.name] * ingredient.amount --calc cost from stored science values
+		if global.packCost[ingredient.name] == 0 then
+			researchUnitCost = math.huge -- block research of techs with undefined cost
+		end
 	end
 	researchUnitCost = (researchUnitCost + attackingForce.current_research.research_unit_energy) / (1 + attackingForce.laboratory_speed_modifier)
 	local researchTotalCost = researchUnitCost * attackingForce.current_research.research_unit_count
