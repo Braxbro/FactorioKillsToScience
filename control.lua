@@ -1,6 +1,15 @@
 local startPrint = true
 
-local function getMaximumEnergyOfRecipe(productName, depth)
+local function contains(tbl, obj)
+	for _, cont in pairs(tbl) do
+		if cont == obj then
+			return true
+		end
+	end
+	return false
+end
+
+local function getMaximumEnergyOfRecipe(productName, depth, blacklistedRecipes)
 	local recipes
 	if game.item_prototypes[productName] then
 		recipes = game.get_filtered_recipe_prototypes({{filter = "has-product-item", elem_filters = {{filter = "name", name = productName}}}}) --recipe is an item
@@ -14,7 +23,7 @@ local function getMaximumEnergyOfRecipe(productName, depth)
 	local maxProductEnergy = 0 
 	local maxEnergyRecipe 
 	for name, recipe in pairs(recipes) do
-		if recipe.allow_as_intermediate then
+		if recipe.allow_as_intermediate and contains(blacklistedRecipes, recipe.name) then
 			local count = 0
 			for _, product in pairs(recipe.products) do
 				if product.name == productName then
@@ -29,7 +38,7 @@ local function getMaximumEnergyOfRecipe(productName, depth)
 	end
 	if maxEnergyRecipe and depth < 3 then
 		for _, ingredient in pairs(maxEnergyRecipe.ingredients) do
-			maxProductEnergy = maxProductEnergy + getMaximumEnergyOfRecipe(ingredient.name, depth + 1) * ingredient.amount
+			maxProductEnergy = maxProductEnergy + getMaximumEnergyOfRecipe(ingredient.name, depth + 1, table.insert(blacklistedRecipes, maxEnergyRecipe.name) * ingredient.amount
 		end
 	end
 	return maxProductEnergy
