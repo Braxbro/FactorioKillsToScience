@@ -1,7 +1,7 @@
 data:extend({
 		{
 			type = "bool-setting",
-			name = "startup-unlock-tech",
+			name = "startup-tech-boost",
 			setting_type = "startup",
 			default_value = true
 		}
