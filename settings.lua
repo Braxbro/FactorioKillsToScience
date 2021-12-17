@@ -3,7 +3,7 @@ data:extend({
 			type = "int-setting",
 			name = "startup-tech-boost",
 			setting_type = "startup",
-			default_value = 400,
+			default_value = 450,
 			min_value = 0
 		}
 })
