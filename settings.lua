@@ -1,9 +1,10 @@
 data:extend({
 		{
-			type = "bool-setting",
+			type = "int-setting",
 			name = "startup-tech-boost",
 			setting_type = "startup",
-			default_value = true
+			default_value = 400,
+			min_value = 0
 		}
 })
 data:extend({
