@@ -37,7 +37,7 @@ end
 local function calculateScienceCosts()
 	local packs = game.get_filtered_item_prototypes({{filter = "subgroup", subgroup = "science-pack"}})
 	for _, pack in pairs(packs) do
-		global.packCost[pack.name] = math.floor(getMaximumEnergyOfRecipe(pack.name, 0)) + 1
+		global.packCost[pack.name] = math.floor(getMaximumEnergyOfRecipe(pack.name, 0) + .5)
 	end
 end
 
