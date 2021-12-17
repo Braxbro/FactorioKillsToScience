@@ -38,7 +38,7 @@ local function getMaximumEnergyOfRecipe(productName, depth, blacklistedRecipes)
 	end
 	if maxEnergyRecipe and depth < 3 then
 		for _, ingredient in pairs(maxEnergyRecipe.ingredients) do
-			maxProductEnergy = maxProductEnergy + getMaximumEnergyOfRecipe(ingredient.name, depth + 1, table.insert(blacklistedRecipes, maxEnergyRecipe.name) * ingredient.amount
+			maxProductEnergy = maxProductEnergy + getMaximumEnergyOfRecipe(ingredient.name, depth + 1, table.insert(blacklistedRecipes, maxEnergyRecipe.name)) * ingredient.amount
 		end
 	end
 	return maxProductEnergy
