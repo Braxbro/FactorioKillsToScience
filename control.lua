@@ -46,7 +46,7 @@ local function onInit()
 	if settings.startup["startup-tech-boost"].value > 0 then
 		for index, force in pairs(game.forces) do
 			global.storedCost[force.name] = settings.startup["startup-tech-boost"].value
-			force.current_research = nil --in case something starts in the tech queue
+			force.research_queue = nil --in case something starts in the tech queue
 		end
 	end
 	calculateScienceCosts()
