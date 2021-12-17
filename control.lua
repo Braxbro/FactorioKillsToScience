@@ -23,7 +23,7 @@ local function getMaximumEnergyOfRecipe(productName, depth, blacklistedRecipes)
 	local maxProductEnergy = 0 
 	local maxEnergyRecipe 
 	for name, recipe in pairs(recipes) do
-		if (recipe.allow_as_intermediate and (not contains(blacklistedRecipes, recipe.name))) or depth == 0 then
+		if depth == 0 or (recipe.allow_as_intermediate and (not contains(blacklistedRecipes, recipe.name))) then
 			local count = 0
 			for _, product in pairs(recipe.products) do
 				if product.name == productName then
