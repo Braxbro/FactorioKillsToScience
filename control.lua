@@ -43,14 +43,11 @@ end
 local function onInit()
 	global.packCost = {}
 	global.storedCost = {}
-    if settings.startup["startup-unlock-tech"].value then
-	   for index, force in pairs(game.forces) do
-	   force.technologies["automation"].researched = true
-	   force.technologies["stone-wall"].researched = true
-	   force.technologies["gun-turret"].researched = true
-	   force.technologies["military"].researched = true
-	   force.technologies["logistics"].researched = true
-	   end
+	if settings.startup["startup-tech-boost"].value > 0 then
+		for index, force in pairs(game.forces) do
+			global.storedCost[force.name] = settings.startup["startup-tech-boost"].value
+			force.current_research = nil --in case something starts in the tech queue
+		end
 	end
 	calculateScienceCosts()
 end
