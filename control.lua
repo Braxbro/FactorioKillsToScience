@@ -133,8 +133,8 @@ local function onTick()
 		game.print("Press Shift-T to open the Auto Research options menu and enable it manually.")
 		startPrint = false
 		if settings.global["print-science-values"] then
-			for pack, cost in pairs(global.packCost) do
-				game.print(pack .. " detected with a cost of " .. cost)
+			for pack, _ in pairs(global.packCost) do
+				game.print(pack .. " detected with a cost of " .. global.packCost[pack])
 			end
 		end
 	end
