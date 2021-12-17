@@ -46,6 +46,11 @@ local function onInit()
 	if settings.startup["startup-tech-boost"].value > 0 then
 		for index, force in pairs(game.forces) do
 			global.storedCost[force.name] = settings.startup["startup-tech-boost"].value
+			if remote.interfaces["auto_research"] then
+				remote.call(auto_research, enabled, force, false)
+				game.print("Starting tech boost is ON. Auto Research has been disabled to permit manual choice of starting boost techs.")
+				game.print("Press Shift-T to open the Auto Research options menu and enable it manually.")
+			end
 			force.research_queue = nil --in case something starts in the tech queue
 		end
 	end
