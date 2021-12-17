@@ -49,7 +49,7 @@ local function onInit()
 		for index, force in pairs(game.forces) do
 			global.storedCost[force.name] = settings.startup["startup-tech-boost"].value
 			if remote.interfaces["auto_research"] then
-				remote.call(auto_research, enabled, force, false)
+				remote.call("auto_research", "enabled", force.name, false)
 			end
 			force.research_queue = nil --in case something starts in the tech queue
 		end
