@@ -14,15 +14,17 @@ local function getMaximumEnergyOfRecipe(productName, depth)
 	local maxProductEnergy = 0 
 	local maxEnergyRecipe 
 	for name, recipe in pairs(recipes) do
-		local count = 0
-		for _, product in pairs(recipe.products) do
-			if product.name == productName then
-				count = count + (product.amount or product.amount_min)
+		if recipe.allow_as_intermediate then
+			local count = 0
+			for _, product in pairs(recipe.products) do
+				if product.name == productName then
+					count = count + (product.amount or product.amount_min)
+				end
 			end
-		end
-		if (recipe.energy / count) > maxProductEnergy then
-			maxProductEnergy = recipe.energy / count
-			maxEnergyRecipe = recipe
+			if (recipe.energy / count) > maxProductEnergy then
+				maxProductEnergy = recipe.energy / count
+				maxEnergyRecipe = recipe
+			end
 		end
 	end
 	if maxEnergyRecipe and depth < 3 then
