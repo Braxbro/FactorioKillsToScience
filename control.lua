@@ -9,7 +9,7 @@ local function getMaximumEnergyOfRecipe(productName)
 			return 0 --cannot find recipe
 		end
 	end
-	local maxProductEnergy = 0
+	local maxProductEnergy = 0 
 	local maxEnergyRecipe 
 	for name, recipe in pairs(recipes) do
 		local count
@@ -85,7 +85,7 @@ function onDeathHandler(event)
 
 	local researchUnitCost = 0
 	for index, ingredient in pairs(attackingForce.current_research.research_unit_ingredients) do
-		researchUnitCost = researchUnitCost + global.packCost[ingredient.name] * ingredient.amount
+		researchUnitCost = researchUnitCost + global.packCost[ingredient.name] * ingredient.amount --calc cost from stored science values
 	end
 	researchUnitCost = (researchUnitCost + attackingForce.current_research.research_unit_energy) / (1 + attackingForce.laboratory_speed_modifier)
 	local researchTotalCost = researchUnitCost * attackingForce.current_research.research_unit_count
@@ -108,7 +108,7 @@ local function onTick()
 		if (force.current_research and global.storedCost[force.name]) then
 			local researchUnitCost = 0
 			for index, ingredient in pairs(force.current_research.research_unit_ingredients) do
-				researchUnitCost = researchUnitCost + global.packCost[ingredient.name] * ingredient.amount
+				researchUnitCost = researchUnitCost + global.packCost[ingredient.name] * ingredient.amount --calc cost from stored science values
 			end
 			researchUnitCost = (researchUnitCost + force.current_research.research_unit_energy) / (1 + force.laboratory_speed_modifier)
 			local researchTotalCost = researchUnitCost * force.current_research.research_unit_count
