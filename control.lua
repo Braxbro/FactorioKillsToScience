@@ -27,7 +27,7 @@ local function getMaximumEnergyOfRecipe(productName)
 	end
 	if maxEnergyRecipe then
 		local sum
-		for _, ingredient in pairs do
+		for _, ingredient in pairs(maxEnergyRecipe.ingredients) do
 			maxProductEnergy = maxProductEnergy + getMaximumEnergyOfRecipe(ingredient.name) * ingredient.amount
 		end
 	end
