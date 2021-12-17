@@ -47,8 +47,8 @@ data:extend({
 data:extend({
 		{
 			type = "bool-setting",
-			name = "print-science-values"
-			setting_type = "runtime-global"
+			name = "print-science-values",
+			setting_type = "runtime-global",
 			default_value = false
 		}
 })
