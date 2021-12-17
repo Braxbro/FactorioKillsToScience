@@ -92,13 +92,12 @@ function onDeathHandler(event)
 	local researchTotalCost = researchUnitCost * attackingForce.current_research.research_unit_count
 	local researchDelta = (entity.prototype.max_health * costPerDamage) / researchTotalCost * (1 + attackingForce.laboratory_productivity_bonus)
 	local researchProgress = attackingForce.research_progress + researchDelta
-	if not overflow == "void" then
-		local costGain = (entity.prototype.max_health * costPerDamage) * (1 + attackingForce.laboratory_productivity_bonus)
-		global.storedCost[attackingForce.name] = global.storedCost[attackingForce.name] + math.max(costGain - (1 - researchTotalCost * attackingForce.research_progress), 0) -- excess gets stored if retaining science
-	end
 	if (researchProgress >= 1) then
 		attackingForce.research_progress = 0
 		attackingForce.current_research.researched = true
+		if not overflow == "void" then
+			global.storedCost[attackingForce.name] = global.storedCost[attackingForce.name] + ((researchProgress - 1) * researchTotalCost) -- excess gets stored if retaining science
+		end
 	else
 		attackingForce.research_progress = researchProgress
 	end
@@ -128,15 +127,18 @@ local function onTick()
 		end
 	end
 	if startPrint and remote.interfaces["auto_research"] then
-		game.print("[Kills to Science]",{r=.3, g=1, b=.3})
-		game.print("Starting tech boost is ON. Auto Research has been disabled to permit manual choice of starting boost techs.")
-		game.print("Press Shift-T to open the Auto Research options menu and enable it manually.")
-		startPrint = false
+		game.print("[Kills to Science] Startup print:",{r=.3, g=1, b=.3})
+		if remote.interfaces["auto_research"] then
+			game.print("Starting tech boost is ON. Auto Research has been disabled to permit manual choice of starting boost techs.")
+			game.print("Press Shift-T to open the Auto Research options menu and enable it manually.")
+		end
 		if settings.global["print-science-values"] then
 			for pack, _ in pairs(global.packCost) do
 				game.print(pack .. " detected with a cost of " .. global.packCost[pack])
 			end
 		end
+		game.print("[Kills to Science] End of startup print.",{r=.3, g=1, b=.3})
+		startPrint = false
 	end
 end
 		
